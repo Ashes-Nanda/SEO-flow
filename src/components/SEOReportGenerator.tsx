@@ -17,6 +17,7 @@ interface SEOMetrics {
 
 export const SEOReportGenerator = () => {
   const [url, setUrl] = useState('');
+  const [competitors, setCompetitors] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [report, setReport] = useState<SEOMetrics | null>(null);
   const { toast } = useToast();
@@ -75,17 +76,36 @@ export const SEOReportGenerator = () => {
 
     setIsLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      const mockReport = generateMockReport();
-      setReport(mockReport);
-      setIsLoading(false);
-      
-      toast({
-        title: "REPORT GENERATED!",
-        description: "SEO AUDIT COMPLETE!",
+    try {
+      const response = await fetch('https://as18.app.n8n.cloud/webhook/e467c6e2-7569-4b88-babd-68168939111b', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          url: url,
+          competitors: competitors,
+        }),
       });
-    }, 2000);
+
+      if (response.ok) {
+        toast({
+          title: "REQUEST SENT!",
+          description: "SEO AUDIT INITIATED!",
+        });
+      } else {
+        throw new Error('Failed to send request');
+      }
+    } catch (error) {
+      console.error('Error sending webhook:', error);
+      toast({
+        title: "ERROR!",
+        description: "FAILED TO START AUDIT!",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const getScoreColor = (score: number): string => {
@@ -114,6 +134,18 @@ export const SEOReportGenerator = () => {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="https://example.com"
+                className="text-lg"
+              />
+            </div>
+            <div className="space-y-4">
+              <label className="block text-sm font-mono font-bold uppercase tracking-wider">
+                COMPETITORS:
+              </label>
+              <Input
+                type="text"
+                value={competitors}
+                onChange={(e) => setCompetitors(e.target.value)}
+                placeholder="competitor1.com, competitor2.com"
                 className="text-lg"
               />
             </div>
