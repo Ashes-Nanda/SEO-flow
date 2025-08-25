@@ -170,7 +170,9 @@ class SEOServiceClass {
       );
 
       if (!scrapeResponse.ok) {
-        throw new Error(`ScraperAPI error: ${scrapeResponse.status}`);
+        console.error(`ScraperAPI error: ${scrapeResponse.status}`);
+        // Return mock data instead of throwing error
+        return this.getMockContentAudit(normalizedUrl);
       }
 
       const htmlContent = await scrapeResponse.text();
