@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, Users, Target, TrendingDown, TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CompetitorComparisonChart } from '@/components/charts';
 
 interface CompetitorCardProps {
   data: any;
@@ -56,6 +57,11 @@ export const CompetitorCard = ({ data, isLoading, className }: CompetitorCardPro
         </CardTitle>
       </CardHeader>
       <CardContent className="p-6 space-y-6">
+        {/* Competitor Comparison Chart */}
+        <div className="mb-6">
+          <CompetitorComparisonChart data={data} />
+        </div>
+
         {/* Competitor Breakdown */}
         <div className="space-y-4">
           <h4 className="font-mono font-black uppercase tracking-wider text-sm">COMPETITOR BREAKDOWN</h4>

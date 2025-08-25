@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, Zap, Monitor, Smartphone, AlertTriangle } from 'lucide-react';
+import { PerformanceScoreChart } from '@/components/charts';
 
 interface TechnicalSEOCardProps {
   data: any;
@@ -73,6 +74,11 @@ export const TechnicalSEOCard = ({ data, isLoading }: TechnicalSEOCardProps) => 
         </CardTitle>
       </CardHeader>
       <CardContent className="p-6 space-y-6">
+        {/* Performance Chart */}
+        <div className="mb-6">
+          <PerformanceScoreChart data={data} />
+        </div>
+
         {/* PageSpeed Scores */}
         <div className="space-y-4">
           <h4 className="font-mono font-black uppercase tracking-wider text-sm">PAGESPEED SCORES</h4>

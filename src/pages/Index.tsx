@@ -31,7 +31,22 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Features Grid */}
+      {/* Main Generator - Moved to top */}
+      <div className="py-16 px-6 bg-muted/20">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-6xl font-black font-mono uppercase tracking-widest mb-6">
+              GENERATE REPORT
+            </h2>
+            <p className="text-xl font-mono font-bold uppercase tracking-wider">
+              DROP YOUR URL. GET YOUR AUDIT. CLOSE YOUR CLIENT.
+            </p>
+          </div>
+          <SEODashboard />
+        </div>
+      </div>
+
+      {/* Features Grid - Moved below generator */}
       <div className="py-16 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
@@ -50,21 +65,6 @@ const Index = () => {
               <p className="font-mono font-bold">Critical issues and actionable recommendations only.</p>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Main Generator */}
-      <div className="py-16 px-6 bg-muted/20">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-6xl font-black font-mono uppercase tracking-widest mb-6">
-              GENERATE REPORT
-            </h2>
-            <p className="text-xl font-mono font-bold uppercase tracking-wider">
-              DROP YOUR URL. GET YOUR AUDIT. CLOSE YOUR CLIENT.
-            </p>
-          </div>
-          <SEODashboard />
         </div>
       </div>
 

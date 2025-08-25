@@ -3,13 +3,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Globe, Mail, Download, Loader2 } from 'lucide-react';
+import { Globe, Download, Loader2 } from 'lucide-react';
 import { KeywordCard } from '@/components/seo-modules/KeywordCard';
 import { ContentAuditCard } from '@/components/seo-modules/ContentAuditCard';
 import { TechnicalSEOCard } from '@/components/seo-modules/TechnicalSEOCard';
 import { BacklinkCard } from '@/components/seo-modules/BacklinkCard';
 import { CompetitorCard } from '@/components/seo-modules/CompetitorCard';
 import { SEOService } from '@/services/seoService';
+import { PDFService } from '@/services/pdfService';
 
 interface SEODashboardState {
   isLoading: boolean;
@@ -31,7 +32,6 @@ interface SEODashboardState {
 export const SEODashboard = () => {
   const [url, setUrl] = useState('');
   const [competitors, setCompetitors] = useState('');
-  const [email, setEmail] = useState('');
   const [dashboardState, setDashboardState] = useState<SEODashboardState>({
     isLoading: false,
     hasResults: false,
@@ -191,37 +191,30 @@ export const SEODashboard = () => {
   };
 
   const handleExportPDF = async () => {
-    if (!email.trim()) {
-      toast({
-        title: "EMAIL REQUIRED!",
-        description: "ENTER EMAIL FOR PDF EXPORT",
-        variant: "destructive",
-      });
-      return;
-    }
-
     try {
       toast({
-        title: "EXPORTING PDF...",
-        description: "GENERATING REPORT",
+        title: "GENERATING REPORT...",
+        description: "CREATING PDF DOWNLOAD",
       });
 
-      await SEOService.exportPDF({
+      const pdfService = new PDFService();
+      const result = await pdfService.generateSEOReport({
         url,
-        email,
-        data: {
-          keywords: dashboardState.keywordData,
-          content: dashboardState.contentData,
-          technical: dashboardState.technicalData,
-          backlinks: dashboardState.backlinkData,
-          competitors: dashboardState.competitorData,
-        }
+        keyword: dashboardState.keywordData,
+        content: dashboardState.contentData,
+        technical: dashboardState.technicalData,
+        backlink: dashboardState.backlinkData,
+        competitor: dashboardState.competitorData,
       });
 
-      toast({
-        title: "PDF SENT!",
-        description: "CHECK YOUR EMAIL",
-      });
+      if (result.success) {
+        toast({
+          title: "REPORT DOWNLOADED!",
+          description: "CHECK YOUR DOWNLOADS FOLDER",
+        });
+      } else {
+        throw new Error(result.message);
+      }
     } catch (error) {
       toast({
         title: "EXPORT FAILED!",
@@ -272,20 +265,7 @@ export const SEODashboard = () => {
               </div>
             </div>
 
-            {dashboardState.hasResults && (
-              <div className="space-y-3">
-                <label className="block text-sm font-mono font-black uppercase tracking-wider">
-                  EMAIL FOR PDF EXPORT
-                </label>
-                <Input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your@email.com"
-                  className="text-lg brutal-border"
-                />
-              </div>
-            )}
+
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
@@ -312,7 +292,7 @@ export const SEODashboard = () => {
                   variant="secondary"
                 >
                   <Download className="mr-2 h-5 w-5" />
-                  EXPORT PDF
+                  DOWNLOAD REPORT
                 </Button>
               )}
             </div>
@@ -322,33 +302,41 @@ export const SEODashboard = () => {
 
       {/* Dashboard Cards */}
       {dashboardState.hasResults && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <KeywordCard 
-            data={dashboardState.keywordData} 
-            isLoading={dashboardState.moduleLoadingStates.keywords}
-          />
-          
-          <ContentAuditCard 
-            data={dashboardState.contentData} 
-            isLoading={dashboardState.moduleLoadingStates.content}
-          />
-          
-          <TechnicalSEOCard 
-            data={dashboardState.technicalData} 
-            isLoading={dashboardState.moduleLoadingStates.technical}
-          />
-          
-          <BacklinkCard 
-            data={dashboardState.backlinkData} 
-            isLoading={dashboardState.moduleLoadingStates.backlinks}
-          />
-          
-          {competitors && (
-            <CompetitorCard 
-              data={dashboardState.competitorData} 
-              isLoading={dashboardState.moduleLoadingStates.competitors}
-              className="lg:col-span-2"
+        <div className="space-y-8">
+          {/* Top Row - Keywords and Content */}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+            <KeywordCard 
+              data={dashboardState.keywordData} 
+              isLoading={dashboardState.moduleLoadingStates.keywords}
             />
+            
+            <ContentAuditCard 
+              data={dashboardState.contentData} 
+              isLoading={dashboardState.moduleLoadingStates.content}
+            />
+          </div>
+
+          {/* Middle Row - Technical and Backlinks */}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+            <TechnicalSEOCard 
+              data={dashboardState.technicalData} 
+              isLoading={dashboardState.moduleLoadingStates.technical}
+            />
+            
+            <BacklinkCard 
+              data={dashboardState.backlinkData} 
+              isLoading={dashboardState.moduleLoadingStates.backlinks}
+            />
+          </div>
+
+          {/* Bottom Row - Competitor Analysis (Full Width) */}
+          {competitors && (
+            <div className="w-full">
+              <CompetitorCard 
+                data={dashboardState.competitorData} 
+                isLoading={dashboardState.moduleLoadingStates.competitors}
+              />
+            </div>
           )}
         </div>
       )}

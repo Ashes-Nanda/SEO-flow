@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, TrendingUp, Search, Target } from 'lucide-react';
+import { KeywordDistributionChart } from '@/components/charts';
 
 interface KeywordCardProps {
   data: any;
@@ -55,7 +56,7 @@ export const KeywordCard = ({ data, isLoading }: KeywordCardProps) => {
       </CardHeader>
       <CardContent className="p-6 space-y-6">
         {/* Overview Stats */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 mb-6">
           <div className="bg-card p-4 brutal-border">
             <div className="text-2xl font-black font-mono text-primary">{data?.totalKeywords}</div>
             <div className="text-sm font-mono font-bold uppercase tracking-wider">TOTAL KEYWORDS</div>
@@ -64,6 +65,11 @@ export const KeywordCard = ({ data, isLoading }: KeywordCardProps) => {
             <div className="text-2xl font-black font-mono text-primary">{data?.averagePosition}</div>
             <div className="text-sm font-mono font-bold uppercase tracking-wider">AVG POSITION</div>
           </div>
+        </div>
+
+        {/* Keyword Distribution Chart */}
+        <div className="mb-6">
+          <KeywordDistributionChart data={data} />
         </div>
 
         {/* Top Keywords */}

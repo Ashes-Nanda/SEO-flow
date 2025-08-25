@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, Link, TrendingUp, Shield } from 'lucide-react';
+import { BacklinkQualityChart } from '@/components/charts';
 
 interface BacklinkCardProps {
   data: any;
@@ -62,7 +63,7 @@ export const BacklinkCard = ({ data, isLoading }: BacklinkCardProps) => {
       </CardHeader>
       <CardContent className="p-6 space-y-6">
         {/* Overview Stats */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 mb-6">
           <div className="bg-card p-4 brutal-border text-center">
             <div className="text-xl font-black font-mono text-green-600">
               {data?.totalBacklinks?.toLocaleString()}
@@ -77,6 +78,11 @@ export const BacklinkCard = ({ data, isLoading }: BacklinkCardProps) => {
             <div className="text-xl font-black font-mono text-green-600">{data?.domainAuthority}</div>
             <div className="text-xs font-mono font-bold uppercase tracking-wider">AUTHORITY</div>
           </div>
+        </div>
+
+        {/* Backlink Quality Charts */}
+        <div className="mb-6">
+          <BacklinkQualityChart data={data} />
         </div>
 
         {/* Top Referring Domains */}
