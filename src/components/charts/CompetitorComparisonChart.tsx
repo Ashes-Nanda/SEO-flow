@@ -60,69 +60,75 @@ export const CompetitorComparisonChart = ({ data }: CompetitorComparisonChartPro
   };
 
   return (
-    <div className="h-96 bg-background brutal-border p-4">
+    <div className="bg-background brutal-border p-4 mb-6">
       <h4 className="font-mono font-black uppercase text-center mb-4 tracking-wider">
         COMPETITOR PERFORMANCE COMPARISON
       </h4>
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          data={chartData}
-          margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
-          barCategoryGap="20%"
-        >
-          <CartesianGrid strokeDasharray="3 3" stroke="#000000" strokeWidth={1} />
-          <XAxis 
-            dataKey="name" 
-            tick={{ fontSize: 10, fontFamily: 'monospace', fontWeight: 'bold' }}
-            stroke="#000000"
-            strokeWidth={2}
-            angle={-45}
-            textAnchor="end"
-            height={60}
-          />
-          <YAxis 
-            tick={{ fontSize: 10, fontFamily: 'monospace', fontWeight: 'bold' }}
-            stroke="#000000"
-            strokeWidth={2}
-          />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend 
-            wrapperStyle={{ 
-              fontSize: '10px', 
-              fontFamily: 'monospace', 
-              fontWeight: 'bold',
-              textTransform: 'uppercase'
-            }}
-          />
-          
-          {/* Page Speed Comparison */}
-          <Bar 
-            dataKey="pageSpeed" 
-            fill="#ef4444" 
-            stroke="#000000" 
-            strokeWidth={2}
-            name="Their PageSpeed"
-          />
-          <Bar 
-            dataKey="yourPageSpeed" 
-            fill="#4ade80" 
-            stroke="#000000" 
-            strokeWidth={2}
-            name="Your PageSpeed"
-          />
-        </BarChart>
-      </ResponsiveContainer>
       
-      <div className="mt-4 grid grid-cols-2 gap-4 text-xs">
-        <div className="bg-muted/20 p-2 brutal-border">
-          <p className="font-mono font-bold">METRICS COMPARED:</p>
+      {/* Chart Container with Fixed Height */}
+      <div className="h-64 mb-4">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            data={chartData}
+            margin={{ top: 10, right: 20, left: 10, bottom: 40 }}
+            barCategoryGap="20%"
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#000000" strokeWidth={1} />
+            <XAxis 
+              dataKey="name" 
+              tick={{ fontSize: 10, fontFamily: 'monospace', fontWeight: 'bold' }}
+              stroke="#000000"
+              strokeWidth={2}
+              angle={-45}
+              textAnchor="end"
+              height={40}
+            />
+            <YAxis 
+              tick={{ fontSize: 10, fontFamily: 'monospace', fontWeight: 'bold' }}
+              stroke="#000000"
+              strokeWidth={2}
+            />
+            <Tooltip content={<CustomTooltip />} />
+            <Legend 
+              wrapperStyle={{ 
+                fontSize: '10px', 
+                fontFamily: 'monospace', 
+                fontWeight: 'bold',
+                textTransform: 'uppercase',
+                paddingTop: '10px'
+              }}
+            />
+            
+            {/* Page Speed Comparison */}
+            <Bar 
+              dataKey="pageSpeed" 
+              fill="#ef4444" 
+              stroke="#000000" 
+              strokeWidth={2}
+              name="Their PageSpeed"
+            />
+            <Bar 
+              dataKey="yourPageSpeed" 
+              fill="#4ade80" 
+              stroke="#000000" 
+              strokeWidth={2}
+              name="Your PageSpeed"
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      
+      {/* Legend and Metrics - Separate from chart */}
+      <div className="grid grid-cols-2 gap-4 text-xs mt-4">
+        <div className="bg-muted/20 p-3 brutal-border">
+          <p className="font-mono font-bold mb-2">METRICS COMPARED:</p>
           <p className="font-mono">• Page Speed Scores</p>
           <p className="font-mono">• Mobile Performance</p>
           <p className="font-mono">• Backlink Counts (K)</p>
         </div>
-        <div className="bg-muted/20 p-2 brutal-border">
-          <p className="font-mono font-bold">LEGEND:</p>
-          <div className="flex items-center gap-2 mt-1">
+        <div className="bg-muted/20 p-3 brutal-border">
+          <p className="font-mono font-bold mb-2">LEGEND:</p>
+          <div className="flex items-center gap-2 mb-1">
             <div className="w-3 h-3 bg-red-500 brutal-border"></div>
             <span className="font-mono">COMPETITORS</span>
           </div>

@@ -56,24 +56,24 @@ export const CompetitorCard = ({ data, isLoading, className }: CompetitorCardPro
           COMPETITOR ANALYSIS
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-6 space-y-6">
+      <CardContent className="p-6">
         {/* Competitor Comparison Chart */}
-        <div className="mb-6">
+        <div className="mb-8">
           <CompetitorComparisonChart data={data} />
         </div>
 
         {/* Competitor Breakdown */}
-        <div className="space-y-4">
-          <h4 className="font-mono font-black uppercase tracking-wider text-sm">COMPETITOR BREAKDOWN</h4>
+        <div className="space-y-4 mb-8">
+          <h4 className="font-mono font-black uppercase tracking-wider text-sm mb-4">COMPETITOR BREAKDOWN</h4>
           {data?.competitors?.map((competitor: any, index: number) => (
-            <div key={index} className="bg-card p-4 brutal-border space-y-3">
-              <div className="font-mono font-black text-lg text-purple-600">
+            <div key={index} className="bg-card p-4 brutal-border space-y-4 mb-4">
+              <div className="font-mono font-black text-lg text-purple-600 pb-2 border-b-2 border-purple-200">
                 {competitor.url}
               </div>
               
               {/* Keyword Gaps */}
               <div className="space-y-2">
-                <h5 className="font-mono font-bold uppercase text-sm flex items-center">
+                <h5 className="font-mono font-bold uppercase text-sm flex items-center mb-2">
                   <Target className="mr-1 h-3 w-3" />
                   KEYWORD GAPS
                 </h5>
@@ -88,7 +88,7 @@ export const CompetitorCard = ({ data, isLoading, className }: CompetitorCardPro
               </div>
 
               {/* Technical Comparison */}
-              <div className="grid grid-cols-3 gap-2 text-sm">
+              <div className="grid grid-cols-3 gap-2 text-sm mt-4">
                 <div className="bg-card p-2 brutal-border text-center">
                   <div className="font-mono font-bold text-xs">PAGE SPEED</div>
                   <div className="flex items-center justify-center gap-1">
@@ -128,8 +128,8 @@ export const CompetitorCard = ({ data, isLoading, className }: CompetitorCardPro
         </div>
 
         {/* Overall Gaps */}
-        <div className="space-y-3">
-          <h4 className="font-mono font-black uppercase tracking-wider text-sm">KEY GAPS</h4>
+        <div className="space-y-3 mb-8">
+          <h4 className="font-mono font-black uppercase tracking-wider text-sm mb-4">KEY GAPS</h4>
           {data?.overallGaps?.slice(0, 3).map((gap: string, index: number) => (
             <div key={index} className="bg-red-50 p-3 brutal-border">
               <div className="text-sm font-mono font-bold text-red-700">{gap}</div>
@@ -139,7 +139,7 @@ export const CompetitorCard = ({ data, isLoading, className }: CompetitorCardPro
 
         {/* Opportunities */}
         <div className="space-y-3">
-          <h4 className="font-mono font-black uppercase tracking-wider text-sm">OPPORTUNITIES</h4>
+          <h4 className="font-mono font-black uppercase tracking-wider text-sm mb-4">OPPORTUNITIES</h4>
           {data?.opportunities?.slice(0, 3).map((opp: string, index: number) => (
             <div key={index} className="bg-green-50 p-3 brutal-border">
               <div className="text-sm font-mono font-bold text-green-700">{opp}</div>
