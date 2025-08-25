@@ -1,4 +1,4 @@
-import { SEOReportGenerator } from '@/components/SEOReportGenerator';
+import { SEODashboard } from '@/components/SEODashboard';
 import heroImage from '@/assets/hero-seo.jpg';
 
 const Index = () => {
@@ -64,7 +64,7 @@ const Index = () => {
               DROP YOUR URL. GET YOUR AUDIT. CLOSE YOUR CLIENT.
             </p>
           </div>
-          <SEOReportGenerator />
+          <SEODashboard />
         </div>
       </div>
 
